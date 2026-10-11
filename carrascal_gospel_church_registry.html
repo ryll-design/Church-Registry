@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippine Missionary Fellowship Inc. - Member Registry</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator Library (QRCode.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <header class="bg-indigo-950 text-white shadow-lg py-4 px-4 sm:px-8">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center overflow-hidden border border-white/20 shadow-inner">
+                    <img src="https://placehold.co/120x120/1e1b4b/ffffff?text=PMFI" alt="Church Logo" class="w-full h-full object-contain p-1">
+                </div>
+                <div>
+                    <p class="text-[11px] uppercase tracking-widest text-indigo-200 font-bold">Philippine Missionary Fellowship Inc.</p>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Member Registry & QR Portal</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 flex-grow w-full">
+        <!-- Single Member Registration Section -->
+        <section class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-100">
+                <div>
+                    <h2 id="formTitle" class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-user-plus text-indigo-600"></i> Member Registry Form
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">Fill out complete personal details to auto-generate a compatible verification QR code.</p>
+                </div>
+            </div>
+
+            <form id="memberForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <!-- Name Fields -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Surname *</label>
+                        <input type="text" id="surname" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. Dela Cruz">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">First Name *</label>
+                        <input type="text" id="firstName" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. Juan">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Middle Name / Initial</label>
+                        <input type="text" id="middleName" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. Santos">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Suffix</label>
+                        <input type="text" id="suffix" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. Jr., III">
+                    </div>
+                </div>
+
+                <!-- Position & Role Category Fields -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Position / Member Type *</label>
+                        <select id="position" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white text-slate-800">
+                            <option value="">Select Type</option>
+                            <option value="Member (Adult)">Member (Adult)</option>
+                            <option value="Member (Youth)">Member (Youth)</option>
+                            <option value="Member (Kid)">Member (Kid)</option>
+                            <option value="Regular">Regular</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Leadership Role</label>
+                        <select id="leadershipRole" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white text-slate-800">
+                            <option value="None">None</option>
+                            <option value="Deacon">Deacon</option>
+                            <option value="Deaconness">Deaconness</option>
+                            <option value="Elder">Elder</option>
+                            <option value="Chairman">Chairman</option>
+                            <option value="YP President">YP President</option>
+                            <option value="Dorcas President">Dorcas President</option>
+                            <option value="Joshua President">Joshua President</option>
+                            <option value="Sunday's School Teacher">Sunday's School Teacher</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Pastoral Staff</label>
+                        <select id="pastoralStaff" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white text-slate-800">
+                            <option value="None">None</option>
+                            <option value="Host Pastor">Host Pastor</option>
+                            <option value="Associate Pastor">Associate Pastor</option>
+                            <option value="Senior Pastor">Senior Pastor</option>
+                            <option value="Pastor's Wife">Pastor's Wife</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Ministry Affiliated</label>
+                        <select id="ministryAffiliated" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white text-slate-800">
+                            <option value="None">None</option>
+                            <option value="Dorcas">Dorcas</option>
+                            <option value="Joshua">Joshua</option>
+                            <option value="SPM (Single Professional Ministry)">SPM (Single Professional Ministry)</option>
+                            <option value="Youth Ministry">Youth Ministry</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Age, Birthdate & Gender -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Age *</label>
+                        <input type="number" id="age" min="0" max="120" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="Age">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Birth Date *</label>
+                        <input type="date" id="birthDate" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" onchange="calculateAgeFromBirthdate()">
+                    </div>
+                </div>
+
+                <!-- Civil Status & Gender -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Gender *</label>
+                        <select id="gender" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Civil Status *</label>
+                        <select id="civilStatus" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white">
+                            <option value="">Select Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widowed">Widowed</option>
+                            <option value="Separated">Separated</option>
+                            <option value="Divorced">Divorced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Contact Info: Phone & Email -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Phone Number</label>
+                        <input type="tel" id="phone" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. 09123456789">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Email Address</label>
+                        <input type="email" id="email" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="e.g. name@example.com">
+                    </div>
+                </div>
+
+                <!-- Baptized Status & Address -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Baptized *</label>
+                        <select id="baptized" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white">
+                            <option value="">Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Residential Address *</label>
+                        <textarea id="address" rows="2" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-slate-50/50 focus:bg-white" placeholder="Street, Barangay, City, Province"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold py-3.5 rounded-xl text-xs shadow-md transition flex items-center justify-center gap-2 active:scale-[0.98]">
+                    <i class="fa-solid fa-floppy-disk"></i> Save & Generate QR Code
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Member Profile & QR Modal -->
+    <div id="memberModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 fade-in border border-slate-100 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                <h3 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-id-card text-indigo-600"></i> Member Registry QR Code
+                </h3>
+                <button onclick="closeModal('memberModal')" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div id="modalDetailsContent" class="space-y-1.5 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <!-- Dynamically filled details -->
+                </div>
+
+                <div class="flex flex-col items-center justify-center bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
+                    <p class="text-[10px] font-bold tracking-widest text-indigo-600 uppercase mb-2">Auto-Generated Compatible QR Code</p>
+                    <div id="qrcode" class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 flex items-center justify-center"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <button onclick="downloadQRCode()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs py-2.5 rounded-xl font-semibold shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> Save/Download QR
+                    </button>
+                    <button onclick="sendToMessenger()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs py-2.5 rounded-xl font-semibold shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fa-brands fa-facebook-messenger"></i> Send to Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal Box -->
+    <div id="customAlertModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 text-center">
+            <h4 id="alertTitle" class="text-base font-extrabold text-slate-800 mb-1">Notification</h4>
+            <p id="alertMessage" class="text-xs text-slate-500 mb-4">Message text.</p>
+            <button onclick="closeCustomAlert()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs py-2.5 rounded-xl font-bold transition">OK</button>
+        </div>
+    </div>
+
+    <script>
+        let activeQrDataUrl = "";
+
+        function showAlert(title, message) {
+            document.getElementById('alertTitle').innerText = title;
+            document.getElementById('alertMessage').innerText = message;
+            document.getElementById('customAlertModal').classList.remove('hidden');
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlertModal').classList.add('hidden');
+        }
+
+        function calculateAgeFromBirthdate() {
+            const birthDateVal = document.getElementById('birthDate').value;
+            if (!birthDateVal) return;
+            const dob = new Date(birthDateVal);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            if (age >= 0) {
+                document.getElementById('age').value = age;
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            // Construct member object matching full PMFI schema
+            const member = {
+                surname: document.getElementById('surname').value.trim(),
+                firstName: document.getElementById('firstName').value.trim(),
+                middleName: document.getElementById('middleName').value.trim(),
+                suffix: document.getElementById('suffix').value.trim(),
+                position: document.getElementById('position').value,
+                leadershipRole: document.getElementById('leadershipRole').value,
+                pastoralStaff: document.getElementById('pastoralStaff').value,
+                ministryAffiliated: document.getElementById('ministryAffiliated').value,
+                age: document.getElementById('age').value.trim(),
+                birthDate: document.getElementById('birthDate').value,
+                gender: document.getElementById('gender').value,
+                civilStatus: document.getElementById('civilStatus').value,
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                baptized: document.getElementById('baptized').value,
+                createdAt: new Date().toISOString()
+            };
+
+            // Reset the form ready for next entry
+            document.getElementById('memberForm').reset();
+            
+            // Open modal displaying the generated QR code
+            openMemberModal(member);
+        }
+
+        function openMemberModal(m) {
+            const fullName = `${m.surname}, ${m.firstName} ${m.middleName || ''} ${m.suffix || ''}`.trim();
+            
+            document.getElementById('modalDetailsContent').innerHTML = `
+                <p><strong>Full Name:</strong> ${fullName}</p>
+                <p><strong>Position Type:</strong> ${m.position}</p>
+                <p><strong>Leadership / Pastoral:</strong> ${m.pastoralStaff !== 'None' ? m.pastoralStaff : (m.leadershipRole !== 'None' ? m.leadershipRole : 'None')}</p>
+                <p><strong>Age & Gender:</strong> ${m.age} yrs (${m.gender})</p>
+                <p><strong>Phone:</strong> ${m.phone || 'N/A'}</p>
+                <p><strong>Baptized:</strong> ${m.baptized}</p>
+                <p><strong>Address:</strong> ${m.address}</p>
+            `;
+
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = "";
+            
+            // Generate standard PMFI_MEMBER format expected by main scanner
+            const memberJsonString = JSON.stringify({
+                type: "PMFI_MEMBER",
+                church: "Philippine Missionary Fellowship Inc.",
+                data: m
+            });
+
+            new QRCode(qrcodeContainer, {
+                text: memberJsonString,
+                width: 155,
+                height: 155,
+                colorDark: "#1e1b4b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+
+            setTimeout(() => {
+                const img = document.querySelector('#qrcode img') || document.querySelector('#qrcode canvas');
+                if (img) {
+                    activeQrDataUrl = img.src || (img.tagName === 'CANVAS' ? img.toDataURL("image/png") : "");
+                }
+            }, 100);
+
+            document.getElementById('memberModal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function downloadQRCode() {
+            if (!activeQrDataUrl) return;
+            const link = document.createElement('a');
+            link.href = activeQrDataUrl;
+            link.download = `PMFI_Member_QR.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function sendToMessenger() {
+            window.open("http://m.me/khadz.oirosele.0406", "_blank");
+        }
+    </script>
+</body>
+</html>
